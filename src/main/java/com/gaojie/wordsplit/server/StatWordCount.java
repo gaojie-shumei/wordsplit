@@ -121,11 +121,11 @@ public class StatWordCount {
 			Extract_WordFrequencyStat(startYear,endYear);
 			StatWordCount(startYear,endYear);
 			
-			File resultFile = new File(projectpath+"WordFrequencyStatistics"+"/result/"+startYear+"-"+endYear+".txt");
+			File resultFile = new File(projectpath+"WordFrequencyStatistics"+"/result/"+startYear+"-"+endYear+".xlsx");
 			if(!resultFile.exists()){
 				resultFile.createNewFile();
 			}
-			WordFrequencyStatisticsUtil.saveFile(wordCount, resultFile);
+			WordFrequencyStatisticsUtil.saveFile(wordCount, resultFile,"utf-8");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

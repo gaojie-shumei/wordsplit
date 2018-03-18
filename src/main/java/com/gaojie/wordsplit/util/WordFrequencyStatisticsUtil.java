@@ -141,7 +141,7 @@ public class WordFrequencyStatisticsUtil {
 						for (String s : set) {
 							wordTFIDF.replace(s, wordTFIDF.get(s), Double.valueOf(String.format("%.4f",(wordTFIDF.get(s)/sumValue)*(Math.log(((double)countAllFile)/wordIDF.get(s))))));
 						}
-						saveFile(wordTFIDF, listfiles[i]);
+						saveFile(wordTFIDF, listfiles[i],"utf-8");
 						break;
 					}
 				}
@@ -152,22 +152,24 @@ public class WordFrequencyStatisticsUtil {
 		}
 	}
 	
-	public static <T extends Number> void saveFile(Map<String, T> map,File f){//f是要存到的文件
+	public static <T extends Number> void saveFile(Map<String, T> map,File f,String encoding){//f是要存到的文件,encoding是文件的编码格式
 		try {
-			Map<String, T> sortedMap = sortMapByValue(map);
-			
-			//System.out.println(sortedMap.toString());
-			FileOutputStream out = new FileOutputStream(f);
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
-			String resultcontent = sortedMap.toString();
-			resultcontent = resultcontent.replace("{", "");
-			resultcontent = resultcontent.replace("}", "");
-			resultcontent = resultcontent.replace(", ", "\r\n");
-			resultcontent = resultcontent.replace("=", " ");
-			bw.write(resultcontent);
-			bw.flush();
-			bw.close();
-			out.close();
+			if(map.size()>0){
+				Map<String, T> sortedMap = sortMapByValue(map);
+				
+				//System.out.println(sortedMap.toString());
+				FileOutputStream out = new FileOutputStream(f);
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, encoding));
+				String resultcontent = sortedMap.toString();
+				resultcontent = resultcontent.replace("{", "");
+				resultcontent = resultcontent.replace("}", "");
+				resultcontent = resultcontent.replace(", ", "\r\n");
+				resultcontent = resultcontent.replace("=", " ");
+				bw.write(resultcontent);
+				bw.flush();
+				bw.close();
+				out.close();
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
