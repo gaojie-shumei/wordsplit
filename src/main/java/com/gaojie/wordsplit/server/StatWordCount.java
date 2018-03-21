@@ -80,19 +80,31 @@ public class StatWordCount {
 						String[] strings = content.split("\n");
 						if(i==0){
 							for (String s : strings) {
-								if(s.split(" ")[0].length()>1){
-									//System.out.println(Long.valueOf(s.split(" ")[1].substring(0, s.split(" ")[1].length()-1)));
-									wordCount.put(s.split(" ")[0], Double.valueOf(s.split(" ")[1].substring(0, s.split(" ")[1].length()-1)));
+								String[] split = s.split(" ");
+								if(split.length>1){
+									if(split[0].length()>1){
+										if(split[1].length()>1){
+										//System.out.println(Long.valueOf(s.split(" ")[1].substring(0, s.split(" ")[1].length()-1)));
+											wordCount.put(split[0], Double.valueOf(split[1].substring(0, split[1].length()-1)));
+										}
+									}
 								}
 							}
 						}else{
 							Set<String> keySet = wordCount.keySet();
 							for (String s : strings){
-								if(s.split(" ")[0].length()>1){
-									if(keySet.contains(s.split(" ")[0])){
-										wordCount.replace(s.split(" ")[0], wordCount.get(s.split(" ")[0]), wordCount.get(s.split(" ")[0])+Double.valueOf(s.split(" ")[1].substring(0, s.split(" ")[1].length()-1)));
-									}else{
-										wordCount.put(s.split(" ")[0], Double.valueOf(s.split(" ")[1].substring(0, s.split(" ")[1].length()-1)));
+								String[] split = s.split(" ");
+								if(split.length>1){
+									if(split[0].length()>1){
+										if(keySet.contains(split[0])){
+											if(split[1].length()>1){
+												wordCount.replace(split[0], wordCount.get(split[0]), wordCount.get(split[0])+Double.valueOf(split[1].substring(0, split[1].length()-1)));
+											}
+										}else{
+											if(split[1].length()>1){
+												wordCount.put(split[0], Double.valueOf(split[1].substring(0, split[1].length()-1)));
+											}
+										}
 									}
 								}
 							}
@@ -117,11 +129,11 @@ public class StatWordCount {
 			String projectpath = StatWordCount.class.getResource("").getPath();
 			projectpath = projectpath.substring(1, projectpath.indexOf("wordsplit") + 10);
 			int startYear = 2000;
-			int endYear = 2000;
+			int endYear = 2005;
 			Extract_WordFrequencyStat(startYear,endYear);
 			StatWordCount(startYear,endYear);
 			
-			File resultFile = new File(projectpath+"WordFrequencyStatistics"+"/result/"+startYear+"-"+endYear+".xlsx");
+			File resultFile = new File(projectpath+"WordFrequencyStatistics"+"/result/"+startYear+"-"+endYear+".txt");
 			if(!resultFile.exists()){
 				resultFile.createNewFile();
 			}

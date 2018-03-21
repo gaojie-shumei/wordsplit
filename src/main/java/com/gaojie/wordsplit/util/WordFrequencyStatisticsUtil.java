@@ -162,7 +162,7 @@ public class WordFrequencyStatisticsUtil {
 				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, encoding));
 				String resultcontent = sortedMap.toString();
 				resultcontent = resultcontent.replace("{", "");
-				resultcontent = resultcontent.replace("}", "");
+				resultcontent = resultcontent.replace("}", "\r\n");
 				resultcontent = resultcontent.replace(", ", "\r\n");
 				resultcontent = resultcontent.replace("=", " ");
 				bw.write(resultcontent);
